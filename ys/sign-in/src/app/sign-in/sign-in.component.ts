@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,12 +9,17 @@ import { Component, OnInit } from '@angular/core';
       </a>
       <form class="login-form">
         <input type="text" placeholder="이메일" class="email">
-        <input type="password" placeholder="비밀번호" class="password">
+        <input type="password" placeholder="비밀번호" 
+        class="password" (keyup)="capslockCheck($event);">
+        <div class="capslockMessage"
+        [style.opacity]="opacity">
+          Caps Lock 이 켜져있네요!
+        </div>
         <button class="submit">로그인</button>
       </form>
       <div class="login-menu">
-      <a href="#" class="login-submenu">비밀번호 재설정</a>
-      <a href="#" class="login-submenu">회원가입</a>
+        <a href="#" class="login-submenu">비밀번호 재설정</a>
+        <a href="#" class="login-submenu">회원가입</a>
       </div>
     </div>
   `,
@@ -46,7 +51,7 @@ import { Component, OnInit } from '@angular/core';
     color: #424242;
     padding: 0 15px;
     border: solid 1px #dbdbdb;
-    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-family: inherit;
   }
   .email{
     border-bottom: none;
@@ -54,6 +59,35 @@ import { Component, OnInit } from '@angular/core';
   }
   .password{
     border-radius: 0 0 4px 4px;
+    position: relative
+  }
+  .capslockMessage{
+    position: absolute;
+    top: 47%;
+    left: 100%;
+    margin-left: 15px;
+    transform: translate(0, -50%);
+    color: white;
+    background-color: #F77;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 13px;
+    font-weight: bold;
+    z-index: 2;
+    transition: opacity ease .3s;
+    width: 90px;
+  }
+  .capslockMessage:before{
+    content: '';
+    display: block;
+    position: absolute;
+    border-top: solid 5px transparent;
+    border-bottom: solid 5px transparent;
+    border-right: solid 11px #F77;
+    left: 1px;
+    top: 50%;
+    transform: translate(-100%, -50%);
   }
   .submit{
     display: block;
@@ -68,8 +102,7 @@ import { Component, OnInit } from '@angular/core';
     border: 1px solid rgb(53, 197, 240);
     border-radius: 5px;
     font-weight: bold;
-    font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
-
+    font-family: inherit;
   }
   .login-menu{
     margin: 20px 0;
@@ -87,11 +120,9 @@ import { Component, OnInit } from '@angular/core';
   }
   `]
 })
-export class SignInComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+export class SignInComponent {
+  opacity = 0;
+  capslockCheck(e) {
+    this.opacity = e.getModifierState("CapsLock") ? 1 : 0;
   }
-
 }
