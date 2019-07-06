@@ -47,21 +47,3 @@ table {
     border-spacing: 0;
 }
 
-body {
-  height: 100%;
-  line-height: 1;
-  letter-spacing: -0.4px;
-  flex-flow: column;
-}
-
-div {
-  display: block;
-}
-
-p {
-  display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-}
