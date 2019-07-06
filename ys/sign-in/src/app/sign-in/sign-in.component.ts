@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
         <img src="../../assets/logo.png" alt="오늘의 집" class="logo">
       </a>
       <div>
-      <form class="login-form" [formGroup]="loginForm">
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <input type="text" placeholder="이메일" class="email"
         formControlName="email">
         <input type="password" placeholder="비밀번호" 
@@ -20,7 +20,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
         [style.opacity]="opacity">
           Caps Lock 이 켜져있네요!
         </div>
-        <button class="submit" (ngSubmit)="onSubmit()">로그인</button>
+        <button type="submit" class="submit">로그인</button>
       </form>
       </div>
       <div class="login-menu">
@@ -144,5 +144,8 @@ export class SignInComponent implements OnInit{
   }
   capslockCheck(e) {
     this.opacity = e.getModifierState("CapsLock") ? 1 : 0;
+  }
+  onSubmit(){
+    if(this.loginForm.invalid) alert('이메일 혹은 비밀번호가 틀립니다');
   }
 }
