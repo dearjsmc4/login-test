@@ -37,6 +37,7 @@ body {
     line-height: 1;
     background: #FAFAFA;
     font-family: "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-size: 14px;
 }
 ol, ul {
     list-style: none;

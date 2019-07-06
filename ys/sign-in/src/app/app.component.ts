@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
     <app-sign-in></app-sign-in>
+    <app-sign-up></app-sign-up>
   `,
   styles: []
 })

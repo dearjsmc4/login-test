@@ -1,29 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
   template: `
+  <div class="wrapper">
     <div class="sign-in-container">
       <a href="https://ohou.se/">
-        <img src="../../assets/logo.png" alt="오늘의 집 로고" class="logo">
+        <img src="../../assets/logo.png" alt="오늘의 집" class="logo">
       </a>
-      <form class="login-form">
-        <input type="text" placeholder="이메일" class="email">
+      <div>
+      <form class="login-form" [formGroup]="loginForm">
+        <input type="text" placeholder="이메일" class="email"
+        formControlName="email">
         <input type="password" placeholder="비밀번호" 
-        class="password" (keyup)="capslockCheck($event);">
+        class="password" (keyup)="capslockCheck($event);"
+        formControlName="password">
         <div class="capslockMessage"
         [style.opacity]="opacity">
           Caps Lock 이 켜져있네요!
         </div>
-        <button class="submit">로그인</button>
+        <button class="submit" (ngSubmit)="onSubmit()">로그인</button>
       </form>
+      </div>
       <div class="login-menu">
         <a href="#" class="login-submenu">비밀번호 재설정</a>
         <a href="#" class="login-submenu">회원가입</a>
       </div>
     </div>
+  </div>
   `,
   styles: [`
+  .wrapper{
+    width: 100%;
+    height: 100vh;
+  }
   .sign-in-container{
     position: absolute;
     top: 50%;
@@ -46,7 +57,7 @@ import { Component } from '@angular/core';
     width: 100%;
     height: 50px;
     margin: 0;
-    font-size: 15px;
+    font-size: 1rem;
     line-height: 50px;
     color: #424242;
     padding: 0 15px;
@@ -71,7 +82,7 @@ import { Component } from '@angular/core';
     background-color: #F77;
     padding: 10px;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 0.7rem;
     line-height: 13px;
     font-weight: bold;
     z-index: 2;
@@ -95,7 +106,7 @@ import { Component } from '@angular/core';
     height: 50px;
     margin: 20px 0;
     padding: 13px 15px;
-    font-size: 17px;
+    font-size: 1rem;
     line-height: 1.41;
     color: white;
     background-color: rgb(53, 197,  240);
@@ -103,12 +114,13 @@ import { Component } from '@angular/core';
     border-radius: 5px;
     font-weight: bold;
     font-family: inherit;
+    cursor: pointer;
   }
   .login-menu{
     margin: 20px 0;
     text-align: center;
     color: #424242;
-    font-size: 15px;
+    font-size: 1rem;
     line-height: 1.4;
   }
   .login-submenu{
@@ -120,8 +132,16 @@ import { Component } from '@angular/core';
   }
   `]
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit{ 
   opacity = 0;
+  loginForm: FormGroup;
+  constructor(private fb: FormBuilder) {}
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
   capslockCheck(e) {
     this.opacity = e.getModifierState("CapsLock") ? 1 : 0;
   }
