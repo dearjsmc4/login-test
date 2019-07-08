@@ -47,7 +47,7 @@ import { SignUpService } from '../sign-up.service';
             <label class="form-label bold" for="confirm-password">비밀번호 확인</label>
             <input type="password" id="confirm-password" 
               formControlName="confirmPassword" class="input-form">
-            <p class="error" *ngIf="confirmPassword.errors?.required && confirmPassword.touched">
+            <p class="error" *ngIf="confirmPassword.errors?.required && confirmPassword.touched && confirmPassword.pristine">
               비밀번호 확인을 입력해 주세요.</p>
             <p class="error" *ngIf="passwordGroup.errors?.match && confirmPassword.touched">
               비밀번호가 일치하지 않습니다</p>
