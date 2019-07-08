@@ -17,7 +17,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
         class="password" (keyup)="capslockCheck($event);"
         formControlName="password">
         <div class="capslockMessage"
-        [style.opacity]="opacity">
+        [style.opacity]="capsOpacity">
           Caps Lock 이 켜져있네요!
         </div>
         <button type="submit" class="submit">로그인</button>
@@ -27,6 +27,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
         <a href="#" class="login-submenu">비밀번호 재설정</a>
         <a href="#" class="login-submenu">회원가입</a>
       </div>
+    </div>
+    <div class="invalid-message" [style.opacity]="messageOpacity">
+      <span>아이디와 비밀번호를 입력해주세요.</span>
     </div>
   </div>
   `,
@@ -130,10 +133,28 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
     color: inherit;
     text-decoration: none;
   }
+  .invalid-message{
+    background-color: rgba(255,0,0,0.5);
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid #f56464;
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity ease .3s;
+  }
+  .invalid-message span{
+    line-height: 50px;
+    color: white;
+  }
   `]
 })
 export class SignInComponent implements OnInit{ 
-  opacity = 0;
+  capsOpacity = 0;
+  messageOpacity = 0;
   loginForm: FormGroup;
   constructor(private fb: FormBuilder) {}
   ngOnInit() {
@@ -143,9 +164,10 @@ export class SignInComponent implements OnInit{
     });
   }
   capslockCheck(e) {
-    this.opacity = e.getModifierState("CapsLock") ? 1 : 0;
+    this.capsOpacity = e.getModifierState("CapsLock") ? 1 : 0;
   }
   onSubmit(){
-    if(this.loginForm.invalid) alert('이메일 혹은 비밀번호가 틀립니다');
+    if(this.loginForm.invalid) this.messageOpacity = 1;
+    setTimeout(()=>{ this.messageOpacity = 0; }, 2000);
   }
 }
